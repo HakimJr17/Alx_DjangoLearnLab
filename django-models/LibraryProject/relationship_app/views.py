@@ -3,8 +3,10 @@ from django.shortcuts import render, redirect # Import redirect for the register
 from django.urls import reverse_lazy # Import reverse_lazy for redirection after registration
 from django.views.generic.detail import DetailView # Keep this specific import as per your request
 from django.contrib.auth.forms import UserCreationForm # NEW: Import UserCreationForm for registration
+from django.contrib.auth import login # Import your Book and Library models
 from .models import Book
-from .models import Library # Import your Book and Library models
+from .models import Library
+
 
 def book_list(request):
     """
