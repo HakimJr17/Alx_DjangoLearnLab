@@ -15,6 +15,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Redirect URLs after login/logout
+LOGIN_REDIRECT_URL = '/'  # Redirect to the home page after successful login (you can change this later)
+LOGOUT_REDIRECT_URL = '/accounts/login/' # Redirect back to the login page after logout
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
