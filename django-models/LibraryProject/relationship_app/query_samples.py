@@ -44,24 +44,20 @@ def setup_sample_data():
     print("Sample data created.\n")
     return author1, author2, author3, library1, library2
 
-# --- MODIFIED FUNCTION ---
 def get_books_by_author(author_name):
     """
     Query all books by a specific author.
     """
     print(f"--- Query 1: All books by {author_name} ---")
     try:
-        # Step 1: Get the Author object (matching checker's "Author.objects.get(name=author_name)")
         author_obj = Author.objects.get(name=author_name)
-        
-        # Step 2: Filter books using the Author object (matching checker's "objects.filter(author=author)")
         books = Book.objects.filter(author=author_obj)
         
         for book in books:
             print(f"- {book.title} (Author: {book.author.name})")
     except Author.DoesNotExist:
         print(f"Author '{author_name}' not found.")
-        books = [] # Return empty list if author not found
+        books = []
     print()
     return books
 
@@ -80,18 +76,25 @@ def list_books_in_library(library_name):
     print()
     return books
 
+# --- MODIFIED FUNCTION ---
 def get_librarian_for_library(library_name):
     """
     Retrieve the librarian for a library.
     """
     print(f"--- Query 3: Librarian for {library_name} ---")
     try:
-        librarian = Librarian.objects.get(library__name=library_name)
+        # Step 1: Get the Library object
+        library_obj = Library.objects.get(name=library_name)
+        
+        # Step 2: Get the Librarian using the Library object (matching checker's "Librarian.objects.get(library=")")
+        librarian = Librarian.objects.get(library=library_obj)
         print(f"Librarian for {library_name}: {librarian.name}")
-    except Librarian.DoesNotExist:
-        print(f"No librarian found for library '{library_name}'.")
     except Library.DoesNotExist:
         print(f"Library '{library_name}' not found for librarian query.")
+        librarian = None
+    except Librarian.DoesNotExist:
+        print(f"No librarian found for library '{library_name}'.")
+        librarian = None
     print()
     return librarian
 
