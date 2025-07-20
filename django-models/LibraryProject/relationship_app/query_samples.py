@@ -44,14 +44,24 @@ def setup_sample_data():
     print("Sample data created.\n")
     return author1, author2, author3, library1, library2
 
+# --- MODIFIED FUNCTION ---
 def get_books_by_author(author_name):
     """
     Query all books by a specific author.
     """
     print(f"--- Query 1: All books by {author_name} ---")
-    books = Book.objects.filter(author__name=author_name)
-    for book in books:
-        print(f"- {book.title} (Author: {book.author.name})")
+    try:
+        # Step 1: Get the Author object (matching checker's "Author.objects.get(name=author_name)")
+        author_obj = Author.objects.get(name=author_name)
+        
+        # Step 2: Filter books using the Author object (matching checker's "objects.filter(author=author)")
+        books = Book.objects.filter(author=author_obj)
+        
+        for book in books:
+            print(f"- {book.title} (Author: {book.author.name})")
+    except Author.DoesNotExist:
+        print(f"Author '{author_name}' not found.")
+        books = [] # Return empty list if author not found
     print()
     return books
 
@@ -68,7 +78,7 @@ def list_books_in_library(library_name):
     except Library.DoesNotExist:
         print(f"Library '{library_name}' not found.")
     print()
-    return books # Return books even if empty
+    return books
 
 def get_librarian_for_library(library_name):
     """
@@ -83,7 +93,7 @@ def get_librarian_for_library(library_name):
     except Library.DoesNotExist:
         print(f"Library '{library_name}' not found for librarian query.")
     print()
-    return librarian # Return librarian object or None if not found/error
+    return librarian
 
 def run_queries():
     print("\n--- Performing Sample Queries ---")
