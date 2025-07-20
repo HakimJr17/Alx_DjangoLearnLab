@@ -50,8 +50,8 @@ def get_books_by_author(author_name):
     """
     print(f"--- Query 1: All books by {author_name} ---")
     try:
-        author_obj = Author.objects.get(name=author_name)
-        books = Book.objects.filter(author=author_obj)
+        author = Author.objects.get(name=author_name)
+        books = Book.objects.filter(author=author)
         
         for book in books:
             print(f"- {book.title} (Author: {book.author.name})")
