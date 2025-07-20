@@ -2,6 +2,7 @@
 from django.urls import path
 from . import views # Import views from the current app
 from relationship_app.views import LibraryDetailView # Import the class-based view explicitly
+from .views import list_books
 
 app_name = 'relationship_app' # Namespace for URLs (good practice)
 
