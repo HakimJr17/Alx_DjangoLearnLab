@@ -4,25 +4,19 @@ import os
 import sys
 import django
 
-# Get the base directory of the Django project (the 'LibraryProject' directory)
-# This assumes query_samples.py is in relationship_app/
-# and relationship_app is a direct child of the LibraryProject where manage.py is
-# So, two os.path.dirname calls to go up from query_samples.py to relationship_app/ to LibraryProject/
+# Get the base directory of the Django project
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
 
-# Configure Django settings (important for running standalone scripts)
-# 'LibraryProject.settings' refers to the settings.py file inside the inner LibraryProject folder
+# Configure Django settings
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
-# Now you can import your models from your relationship_app
+# Now you can import your models
 from relationship_app.models import Author, Book, Library, Librarian
 
-def run_queries():
-    print("\n--- Performing Sample Queries ---")
-
-    # Clean up existing data to ensure fresh start for demonstration
+def setup_sample_data():
+    """Sets up sample data for testing queries."""
     print("--- Cleaning up existing data ---")
     Librarian.objects.all().delete()
     Library.objects.all().delete()
@@ -30,7 +24,6 @@ def run_queries():
     Author.objects.all().delete()
     print("Existing data cleared.\n")
 
-    # --- Data Setup for demonstration purposes ---
     print("--- Setting up sample data ---")
     author1 = Author.objects.create(name="George Orwell")
     author2 = Author.objects.create(name="Jane Austen")
@@ -42,32 +35,67 @@ def run_queries():
     book4 = Book.objects.create(title="To Kill a Mockingbird", author=author3)
 
     library1 = Library.objects.create(name="City Central Library")
-    library1.books.add(book1, book2, book3) # Adding multiple books to a library
+    library1.books.add(book1, book2, book3)
     library2 = Library.objects.create(name="Riverside Branch")
     library2.books.add(book4)
 
-    librarian1 = Librarian.objects.create(name="Alice Smith", library=library1)
-    librarian2 = Librarian.objects.create(name="Bob Johnson", library=library2)
+    Librarian.objects.create(name="Alice Smith", library=library1)
+    Librarian.objects.create(name="Bob Johnson", library=library2)
     print("Sample data created.\n")
+    return author1, author2, author3, library1, library2
 
-    # --- Query 1: Query all books by a specific author. ---
-    print("--- Query 1: All books by George Orwell ---")
-    george_orwell_books = Book.objects.filter(author__name="George Orwell")
-    for book in george_orwell_books:
+def get_books_by_author(author_name):
+    """
+    Query all books by a specific author.
+    """
+    print(f"--- Query 1: All books by {author_name} ---")
+    books = Book.objects.filter(author__name=author_name)
+    for book in books:
         print(f"- {book.title} (Author: {book.author.name})")
     print()
+    return books
 
-    # --- Query 2: List all books in a library. ---
-    print("--- Query 2: All books in City Central Library ---")
-    city_library = Library.objects.get(name="City Central Library")
-    for book in city_library.books.all():
-        print(f"- {book.title} (Author: {book.author.name})")
+def list_books_in_library(library_name):
+    """
+    List all books in a library.
+    """
+    print(f"--- Query 2: All books in {library_name} ---")
+    try:
+        library = Library.objects.get(name=library_name)
+        books = library.books.all()
+        for book in books:
+            print(f"- {book.title} (Author: {book.author.name})")
+    except Library.DoesNotExist:
+        print(f"Library '{library_name}' not found.")
     print()
+    return books # Return books even if empty
 
-    # --- Query 3: Retrieve the librarian for a library. ---
-    print("--- Query 3: Librarian for City Central Library ---")
-    city_library_librarian = Librarian.objects.get(library__name="City Central Library")
-    print(f"Librarian for City Central Library: {city_library_librarian.name}")
+def get_librarian_for_library(library_name):
+    """
+    Retrieve the librarian for a library.
+    """
+    print(f"--- Query 3: Librarian for {library_name} ---")
+    try:
+        librarian = Librarian.objects.get(library__name=library_name)
+        print(f"Librarian for {library_name}: {librarian.name}")
+    except Librarian.DoesNotExist:
+        print(f"No librarian found for library '{library_name}'.")
+    except Library.DoesNotExist:
+        print(f"Library '{library_name}' not found for librarian query.")
+    print()
+    return librarian # Return librarian object or None if not found/error
+
+def run_queries():
+    print("\n--- Performing Sample Queries ---")
+    
+    # Setup data (returns some objects for direct use if needed)
+    author1, _, _, library1, _ = setup_sample_data()
+
+    # Execute queries using the new functions
+    get_books_by_author("George Orwell")
+    list_books_in_library("City Central Library")
+    get_librarian_for_library("City Central Library")
+
     print("\n--- Queries Complete ---\n")
 
 if __name__ == "__main__":
