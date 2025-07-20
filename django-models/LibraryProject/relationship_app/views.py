@@ -1,7 +1,8 @@
 # relationship_app/views.py
 from django.shortcuts import render
 from django.views.generic import DetailView # Import DetailView for the class-based view
-from .models import Book, Library # Import your Book and Library models
+from .models import Book 
+from .models import Library # Import your Book and Library models
 
 def book_list(request):
     """
