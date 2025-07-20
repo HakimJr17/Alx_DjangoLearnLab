@@ -19,7 +19,7 @@ urlpatterns = [
     # Existing URL patterns
     path('books/', views.book_list, name='book_list'),
     path('library/<int:pk>/', LibraryDetailView.as_view(), name='library_detail'),
-    path('relationship/', include('relationship_app.urls')),
+
 
     # Authentication URL patterns
     # Login URL: Uses Django's built-in LoginView, pointing it to our custom template
