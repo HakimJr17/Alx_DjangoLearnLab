@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Admin!</h1>
+    <p>This is the exclusive content for users with the {{ role }} role.</p>
+    <p><a href="{% url 'relationship_app:logout' %}">Logout</a></p>
+    <p><a href="{% url 'relationship_app:book_list' %}">Go to Books</a></p>
+</body>
+</html>
