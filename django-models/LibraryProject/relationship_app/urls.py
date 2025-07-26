@@ -14,7 +14,7 @@ from relationship_app.views import (
     librarian_view,
     member_view,
     add_book_view,    
-    edit_book_view,   
+    change_book_view,   
     delete_book_view  
 )
 
@@ -53,7 +53,7 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_view, name='admin_dashboard'),
     path('librarian-dashboard/', views.librarian_view, name='librarian_dashboard'),
     path('member-dashboard/', views.member_view, name='member_dashboard'),
-    path('books/add/', add_book_view, name='add_book'),
-    path('books/edit/<int:book_id>/', edit_book_view, name='edit_book'),
-    path('books/delete/<int:book_id>/', delete_book_view, name='delete_book'),
+    path('add_book/', add_book_view, name='add_book'),
+    path('edit_book/<int:book_id>/', change_book_view, name='edit_book'),
+    path('delete_book/<int:book_id>/', delete_book_view, name='delete_book'),
 ]
