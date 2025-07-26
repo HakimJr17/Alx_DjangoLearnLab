@@ -4,9 +4,9 @@ from django.urls import reverse_lazy # Import reverse_lazy for redirection after
 from django.views.generic.detail import DetailView # Keep this specific import as per your request
 from django.contrib.auth.forms import UserCreationForm # NEW: Import UserCreationForm for registration
 from django.contrib.auth import login # Import your Book and Library models
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required 
 from .models import Book
 from .models import Library
-from .views import list_books
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse # NEW: Import reverse for named URL redirection
 
@@ -76,15 +76,18 @@ def is_member(user):
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html', {'role': 'Admin'})
 
+
 @login_required
 @user_passes_test(is_librarian, login_url='/relationship/accounts/login/', redirect_field_name=None)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html', {'role': 'Librarian'})
 
+
 @login_required
 @user_passes_test(is_member, login_url='/relationship/accounts/login/', redirect_field_name=None)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
+
 
 # --- Dashboard Redirect View ---
 @login_required
@@ -98,3 +101,32 @@ def dashboard_redirect(request):
             return redirect(reverse('relationship_app:member_dashboard'))
     # Fallback if no profile or unknown role (e.g., to book list or a generic home)
     return redirect(reverse('relationship_app:book_list'))
+
+
+@login_required # Ensures user is logged in
+@permission_required('relationship_app.can_add_book', login_url='/relationship/accounts/login/', raise_exception=True)
+def add_book_view(request):
+    """
+    View for adding a new book. Only accessible to users with 'can_add_book' permission.
+    """
+    # In a real scenario, you'd handle form submission here
+    return render(request, 'relationship_app/add_book.html', {'message': 'You have permission to add books.'})
+
+
+@login_required
+@permission_required('relationship_app.can_edit_book', login_url='/relationship/accounts/login/', raise_exception=True)
+def edit_book_view(request, book_id):
+    """
+    View for editing an existing book. Only accessible to users with 'can_edit_book' permission.
+    """
+    # In a real scenario, you'd fetch the book and handle form submission
+    return render(request, 'relationship_app/edit_book.html', {'message': f'You have permission to edit book ID: {book_id}.'})
+
+@login_required
+@permission_required('relationship_app.can_delete_book', login_url='/relationship/accounts/login/', raise_exception=True)
+def delete_book_view(request, book_id):
+    """
+    View for deleting a book. Only accessible to users with 'can_delete_book' permission.
+    """
+    # In a real scenario, you'd delete the book
+    return render(request, 'relationship_app/delete_book.html', {'message': f'You have permission to delete book ID: {book_id}.'})

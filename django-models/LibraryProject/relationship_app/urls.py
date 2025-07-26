@@ -3,7 +3,20 @@ from django.urls import path, include
 from . import views
 from relationship_app.views import LibraryDetailView
 from django.shortcuts import redirect
-from .views import list_books
+#from .views import list_books
+
+from relationship_app.views import (
+    book_list,
+    LibraryDetailView,
+    register,
+    dashboard_redirect,
+    admin_view,
+    librarian_view,
+    member_view,
+    add_book_view,    
+    edit_book_view,   
+    delete_book_view  
+)
 
 # Import Django's built-in auth views
 from django.contrib.auth import views as auth_views
@@ -40,4 +53,7 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_view, name='admin_dashboard'),
     path('librarian-dashboard/', views.librarian_view, name='librarian_dashboard'),
     path('member-dashboard/', views.member_view, name='member_dashboard'),
+    path('books/add/', add_book_view, name='add_book'),
+    path('books/edit/<int:book_id>/', edit_book_view, name='edit_book'),
+    path('books/delete/<int:book_id>/', delete_book_view, name='delete_book'),
 ]

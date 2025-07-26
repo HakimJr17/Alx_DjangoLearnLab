@@ -20,7 +20,7 @@ class Book(models.Model):
     libraries = models.ManyToManyField('Library', related_name='books') 
 
     class Meta:
-        # Re-added Book permissions
+        # Book permissions
         permissions = [
             ("can_add_book", "Can add a new book"),
             ("can_edit_book", "Can edit existing books"),
