@@ -23,7 +23,7 @@ class Book(models.Model):
         # Book permissions
         permissions = [
             ("can_add_book", "Can add a new book"),
-            ("can_edit_book", "Can edit existing books"),
+            ("can_change_book", "Can change existing books"),
             ("can_delete_book", "Can delete books"),
         ]
 
