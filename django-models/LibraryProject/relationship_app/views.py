@@ -115,8 +115,8 @@ def add_book_view(request):
 
 
 @login_required
-@permission_required('relationship_app.can_edit_book', login_url='/relationship/accounts/login/', raise_exception=True)
-def edit_book_view(request, book_id):
+@permission_required('relationship_app.can_change_book', login_url='/relationship/accounts/login/', raise_exception=True)
+def change_book_view(request, book_id):
     """
     View for editing an existing book. Only accessible to users with 'can_edit_book' permission.
     """
