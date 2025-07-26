@@ -4,7 +4,8 @@ from django.urls import reverse_lazy # Import reverse_lazy for redirection after
 from django.views.generic.detail import DetailView # Keep this specific import as per your request
 from django.contrib.auth.forms import UserCreationForm # NEW: Import UserCreationForm for registration
 from django.contrib.auth import login # Import your Book and Library models
-from django.contrib.auth.decorators import login_required, user_passes_test, permission_required 
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import permission_required 
 from .models import Book
 from .models import Library
 from django.contrib.auth.decorators import login_required, user_passes_test
