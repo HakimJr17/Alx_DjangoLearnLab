@@ -21,6 +21,8 @@ def book_list(request):
     # Renders the 'list_books.html' template located in 'relationship_app/templates/relationship_app/'
     return render(request, 'relationship_app/list_books.html', context)
 
+
+
 class LibraryDetailView(DetailView):
     """
     Class-based view to display details for a specific library,
@@ -33,6 +35,7 @@ class LibraryDetailView(DetailView):
 
     # DetailView automatically fetches a single object based on the URL's primary key (pk) or slug.
     # The related books can then be accessed directly in the template using library.books.all()
+
 
 # --- NEW: Registration View ---
 def register(request):

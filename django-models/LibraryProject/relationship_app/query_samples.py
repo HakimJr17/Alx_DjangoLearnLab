@@ -44,6 +44,8 @@ def setup_sample_data():
     print("Sample data created.\n")
     return author1, author2, author3, library1, library2
 
+
+
 def get_books_by_author(author_name):
     """
     Query all books by a specific author.
@@ -61,6 +63,8 @@ def get_books_by_author(author_name):
     print()
     return books
 
+
+
 def list_books_in_library(library_name):
     """
     List all books in a library.
@@ -76,7 +80,8 @@ def list_books_in_library(library_name):
     print()
     return books
 
-# --- MODIFIED FUNCTION ---
+
+
 def get_librarian_for_library(library_name):
     """
     Retrieve the librarian for a library.
@@ -97,6 +102,8 @@ def get_librarian_for_library(library_name):
         librarian = None
     print()
     return librarian
+
+
 
 def run_queries():
     print("\n--- Performing Sample Queries ---")
