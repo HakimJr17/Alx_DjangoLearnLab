@@ -6,7 +6,10 @@ from django.contrib.auth.forms import UserCreationForm # NEW: Import UserCreatio
 from django.contrib.auth import login # Import your Book and Library models
 from .models import Book
 from .models import Library
+from .views import list_books
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.urls import reverse # NEW: Import reverse for named URL redirection
+
 
 
 def book_list(request):
@@ -82,3 +85,16 @@ def librarian_view(request):
 @user_passes_test(is_member, login_url='/relationship/accounts/login/', redirect_field_name=None)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html', {'role': 'Member'})
+
+# --- Dashboard Redirect View ---
+@login_required
+def dashboard_redirect(request):
+    if hasattr(request.user, 'userprofile'):
+        if request.user.userprofile.role == 'ADMIN':
+            return redirect(reverse('relationship_app:admin_dashboard'))
+        elif request.user.userprofile.role == 'LIBRARIAN':
+            return redirect(reverse('relationship_app:librarian_dashboard'))
+        elif request.user.userprofile.role == 'MEMBER':
+            return redirect(reverse('relationship_app:member_dashboard'))
+    # Fallback if no profile or unknown role (e.g., to book list or a generic home)
+    return redirect(reverse('relationship_app:book_list'))

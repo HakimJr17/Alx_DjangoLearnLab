@@ -3,7 +3,6 @@ from django.urls import path, include
 from . import views
 from relationship_app.views import LibraryDetailView
 from django.shortcuts import redirect
-from .views import list_books
 
 
 # Import Django's built-in auth views
@@ -33,4 +32,12 @@ urlpatterns = [
 
     # Registration URL: Links to our custom 'register' function-based view
     path('accounts/register/', views.register, name='register'),
+
+    # --- Dashboard Redirect URL ---
+    path('dashboard_redirect/', views.dashboard_redirect, name='dashboard_redirect'),
+
+    # --- Role-based view URL patterns ---
+    path('admin-dashboard/', views.admin_view, name='admin_dashboard'),
+    path('librarian-dashboard/', views.librarian_view, name='librarian_dashboard'),
+    path('member-dashboard/', views.member_view, name='member_dashboard'),
 ]
