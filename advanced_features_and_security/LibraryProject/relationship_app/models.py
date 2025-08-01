@@ -54,6 +54,7 @@ class CustomUser(AbstractUser):
         ('LIBRARIAN', 'Librarian'),
         ('MEMBER', 'Member'),
     )
+    
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='MEMBER')
