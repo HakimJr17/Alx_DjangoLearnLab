@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Library: <span class="text-blue-600">{{ library.name }}</span></h1>
+
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Books in Library:</h2>
+        {% if library.books.all %}
+            <ul class="list-disc pl-5 space-y-2">
+                {% for book in library.books.all %}
+                <li class="text-lg text-gray-700 p-2 border-b border-gray-200 last:border-b-0 rounded-md hover:bg-gray-50 transition duration-150 ease-in-out">
+                    <span class="font-semibold">{{ book.title }}</span> by <span class="text-gray-600">{{ book.author.name }}</span>
+                    {# (Published {{ book.publication_year }}) #}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-600 text-lg">No books found in this library.</p>
+        {% endif %}
+        <div class="mt-8 text-center">
+            <a href="{% url 'relationship_app:book_list' %}" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 ease-in-out shadow-md mr-4">
+                View All Books
+            </a>
+            <a href="{% url 'admin:index' %}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 ease-in-out shadow-md">
+                Go to Admin
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Books</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Books Available:</h1>
+        {% if books %}
+            <ul class="list-disc pl-5 space-y-2">
+                {% for book in books %}
+                <li class="text-lg text-gray-700 p-2 border-b border-gray-200 last:border-b-0 rounded-md hover:bg-gray-50 transition duration-150 ease-in-out">
+                    <span class="font-semibold">{{ book.title }}</span> by <span class="text-gray-600">{{ book.author.name }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-600 text-lg">No books found in the library.</p>
+        {% endif %}
+        <div class="mt-8 text-center">
+            <a href="{% url 'admin:index' %}" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-150 ease-in-out shadow-md">
+                Go to Admin
+            </a>
+        </div>
+    </div>
+</body>
+</html>
