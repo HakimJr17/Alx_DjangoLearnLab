@@ -1,11 +1,11 @@
-# relationship_app/models.py
+# bookshelf/models.py  <-- CORRECTED FILE HEADER
 
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager # NEW: Import BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-# --- NEW: Custom User Manager inheriting from BaseUserManager ---
+# --- Custom User Manager inheriting from BaseUserManager ---
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -20,7 +20,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
-        extra_fields.setdefault('role', 'ADMIN') # Set the role to ADMIN for a superuser
+        extra_fields.setdefault('role', 'ADMIN')
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError('Superuser must have is_staff=True.')
@@ -30,43 +30,23 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-# --- UPDATED: Custom User Model inheriting from AbstractUser ---
-class CustomUser(AbstractUser):
-    groups = models.ManyToManyField(
-        'auth.Group',
-        verbose_name='groups',
-        blank=True,
-        help_text='The groups this user belongs to.',
-        related_name='customuser_set',
-        related_query_name='customuser',
-    )
-    user_permissions = models.ManyToManyField(
-        'auth.Permission',
-        verbose_name='user permissions',
-        blank=True,
-        help_text='Specific permissions for this user.',
-        related_name='customuser_set',
-        related_query_name='customuser',
-    )
-
     ROLE_CHOICES = (
         ('ADMIN', 'Admin'),
         ('LIBRARIAN', 'Librarian'),
         ('MEMBER', 'Member'),
     )
-    
+
     date_of_birth = models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photos/', null=True, blank=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='MEMBER')
 
-    # UPDATED: Tell the CustomUser model to use our new CustomUserManager
-    objects = CustomUserManager()
+    objects = BaseUserManager()
 
     def __str__(self):
         return self.username
 
 
-# --- Existing Models (no changes needed) ---
+# --- Existing Models from your code ---
 
 class Author(models.Model):
     name = models.CharField(max_length=200)
@@ -102,10 +82,26 @@ class Library(models.Model):
     def __str__(self):
         return self.name
 
-
-class Librarian(models.Model):
-    name = models.CharField(max_length=100)
-    library = models.OneToOneField(Library, on_delete=models.CASCADE, related_name='librarian')
+# --- NEW: A better way to handle librarians ---
+# We use a OneToOneField to link a Library to a CustomUser
+'''class LibrarianProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    library = models.ForeignKey(Library, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.name} (librarian for {self.library.name})"
+        return f"Librarian: {self.user.username} at {self.library.name}"
+'''
+
+# We'll use signals to automatically create a LibrarianProfile when a user's role is set to Librarian
+''' @receiver(post_save, sender=CustomUser)
+def create_librarian_profile(sender, instance, created, **kwargs):
+    if instance.role == 'LIBRARIAN' and not hasattr(instance, 'librarianprofile'):
+        LibrarianProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=CustomUser)
+def save_librarian_profile(sender, instance, **kwargs):
+    if hasattr(instance, 'librarianprofile'):
+        instance.librarianprofile.save()
+
+# We'll need to remove the old Librarian model from your app's code if it exists.
+# We will use the LibrarianProfile instead.'''

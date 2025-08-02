@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
-from .models import Book, Library, CustomUser
+from .models import Book, Library
 
 
 def book_list(request):
