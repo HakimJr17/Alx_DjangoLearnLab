@@ -51,19 +51,19 @@ def is_member(user):
 
 # --- Role-based views (no changes here as they use the updated helper functions) ---
 @login_required
-@user_passes_test(is_admin, login_url='/relationship/accounts/login/', redirect_field_name=None)
+@user_passes_test(is_admin, login_url='/bookshelf/accounts/login/', redirect_field_name=None)
 def admin_view(request):
     return render(request, 'bookshelf/admin_view.html', {'role': 'Admin'})
 
 
 @login_required
-@user_passes_test(is_librarian, login_url='/relationship/accounts/login/', redirect_field_name=None)
+@user_passes_test(is_librarian, login_url='/bookshelf/accounts/login/', redirect_field_name=None)
 def librarian_view(request):
     return render(request, 'bookshelf/librarian_view.html', {'role': 'Librarian'})
 
 
 @login_required
-@user_passes_test(is_member, login_url='/relationship/accounts/login/', redirect_field_name=None)
+@user_passes_test(is_member, login_url='/bookshelf/accounts/login/', redirect_field_name=None)
 def member_view(request):
     return render(request, 'bookshelf/member_view.html', {'role': 'Member'})
 
@@ -83,17 +83,17 @@ def dashboard_redirect(request):
 
 
 @login_required
-@permission_required('bookshelf.can_add_book', login_url='/relationship/accounts/login/', raise_exception=True)
+@permission_required('bookshelf.can_add_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
 def add_book_view(request):
     return render(request, 'bookshelf/add_book.html', {'message': 'You have permission to add books.'})
 
 
 @login_required
-@permission_required('bookshelf.can_change_book', login_url='/relationship/accounts/login/', raise_exception=True)
+@permission_required('bookshelf.can_change_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
 def change_book_view(request, book_id):
     return render(request, 'bookshelf/edit_book.html', {'message': f'You have permission to edit book ID: {book_id}.'})
 
 @login_required
-@permission_required('bookshelf.can_delete_book', login_url='/relationship/accounts/login/', raise_exception=True)
+@permission_required('bookshelf.can_delete_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
 def delete_book_view(request, book_id):
     return render(request, 'bookshelf/delete_book.html', {'message': f'You have permission to delete book ID: {book_id}.'})

@@ -9,7 +9,7 @@ from django.shortcuts import redirect
 
 # Helper function to redirect root to book list
 def redirect_to_book_list(request):
-    return redirect('relationship_app:book_list') # Redirects to the namespaced URL
+    return redirect('bookshelf:book_list') # Redirects to the namespaced URL
 
 
 urlpatterns = [

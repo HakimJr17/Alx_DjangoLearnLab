@@ -16,8 +16,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Redirect URLs after login/logout
-LOGIN_REDIRECT_URL = '/relationship/dashboard_redirect/'  # Redirect to the home page after successful login (you can change this later)
-LOGOUT_REDIRECT_URL = '/relationship/accounts/login/' # Redirect back to the login page after logout
+LOGIN_REDIRECT_URL = '/bookshelf/dashboard_redirect/'  # Redirect to the home page after successful login (you can change this later)
+LOGOUT_REDIRECT_URL = '/bookshelf/accounts/login/' # Redirect back to the login page after logout
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
