@@ -1,4 +1,4 @@
-# relationship_app/admin.py
+# bookshelf/admin.py
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin 
@@ -14,7 +14,7 @@ admin.site.register(Librarian)
 
 # --- UPDATED: Extend Django's default UserAdmin to work with CustomUser ---
 # Define a custom UserAdmin to display CustomUser fields
-@admin.register(CustomUser)
+
 class CustomUserAdmin(BaseUserAdmin):
     # These are the fields from AbstractUser that you want to display
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'role')
@@ -23,3 +23,5 @@ class CustomUserAdmin(BaseUserAdmin):
     fieldsets = BaseUserAdmin.fieldsets + (
         ('Custom Fields', {'fields': ('date_of_birth', 'profile_photo', 'role')}),
     )
+
+admin.site.register(CustomUser, CustomUserAdmin)
