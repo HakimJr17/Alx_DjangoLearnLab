@@ -14,8 +14,6 @@ def redirect_to_book_list(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # This line correctly includes your app's URLs at the 'relationship/' path
-    path('relationship/', include('relationship_app.urls')),
     # --- NEW: This handles the root URL ('/') ---
     path('', redirect_to_book_list, name='home'),
 ]
