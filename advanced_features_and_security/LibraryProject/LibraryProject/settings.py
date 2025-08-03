@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/5.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/5.2/ref/settings/
+https://docs.djangoproject.com/en/5.2/ref/settings/#SECURE_SSL_REDIRECT
 """
 
 from pathlib import Path
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'csp.middleware.CSPMiddleware', # Content Security Policy middleware
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -129,21 +129,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
-# --- NEW: Security Settings ---
-# https://docs.djangoproject.com/en/5.2/topics/security/
+# --- Security Settings ---
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# Enforce secure cookies (CSRF and Session)
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-
-# To prevent Clickjacking attacks
 X_FRAME_OPTIONS = 'DENY'
 
+# NEW: HTTPS and HSTS settings
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 31536000 # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
-#--- NEW: CSP Settings ---
-# https://django-csp.readthedocs.io/en/latest/
+# --- CSP Settings ---
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)
 CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)

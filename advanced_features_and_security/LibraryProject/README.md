@@ -33,6 +33,19 @@ The application uses Django's built-in Object-Relational Mapper (ORM) for all da
 3. Content Security Policy (CSP)
 The django-csp middleware has been installed and configured in settings.py. This policy instructs web browsers to only allow content from trusted sources, effectively mitigating Cross-Site Scripting (XSS) attacks. The policy is configured to allow resources from the current site ('self') and specifically permits scripts and styles from cdn.tailwindcss.com, which is used for styling the application.
 
+4. HTTPS and Secure Redirects
+The application has been configured to enforce secure HTTPS connections to protect data transmitted between the client and the server. This is achieved by adjusting the following settings in settings.py:
+
+SECURE_SSL_REDIRECT = True: This setting forces all unencrypted HTTP requests to automatically redirect to the secure HTTPS version of the site.
+
+HSTS Configuration: The following settings enable HTTP Strict Transport Security (HSTS), which tells the browser to only communicate with the server over HTTPS for a specified period of time. This helps prevent man-in-the-middle attacks.
+
+SECURE_HSTS_SECONDS = 31536000: Sets the HSTS policy for a duration of one year.
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True: Applies the HSTS policy to all subdomains of the site.
+
+SECURE_HSTS_PRELOAD = True: Allows the domain to be submitted to the HSTS preload list for major web browsers.
+
 Permissions and Groups Configuration
 This document provides an explanation of how permissions and groups are configured and used in this Django project to manage user access.
 
