@@ -6,26 +6,45 @@
     <title>Edit Book</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
-        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin: auto; text-align: center; }
-        h1 { color: #ffc107; margin-bottom: 20px; }
-        p { font-size: 1.1em; line-height: 1.6; }
-        .warning-message { color: #ffc107; font-weight: bold; margin-bottom: 15px; }
+        .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin: auto; }
+        h1 { color: #ffc107; margin-bottom: 20px; text-align: center; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { font-weight: bold; }
+        input[type="text"], select { padding: 10px; border: 1px solid #ddd; border-radius: 5px; width: 100%; box-sizing: border-box; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; }
+        button:hover { background-color: #0056b3; }
+        .action-links { text-align: center; margin-top: 20px; }
         .action-links a { display: inline-block; margin: 10px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none; transition: background-color 0.3s ease; }
         .action-links a:hover { background-color: #0056b3; }
-        .error-message { color: #dc3545; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Edit Book</h1>
         <p class="warning-message">{{ message }}</p>
-        <p>This page is where a user with `can_edit_book` permission would modify existing book details.</p>
+        
+        <!-- A form to edit the book details -->
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" value="{{ book.title }}" required>
+            </div>
+            <div>
+                <label for="author">Author:</label>
+                <select id="author" name="author" required>
+                    {% for author in authors %}
+                        <option value="{{ author.id }}" {% if author.id == book.author.id %}selected{% endif %}>
+                            {{ author.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">Update Book</button>
+        </form>
+
         <div class="action-links">
-            <a href="{% url 'bookshelf:admin_dashboard' %}">Admin Dashboard</a>
-            <a href="{% url 'bookshelf:librarian_dashboard' %}">Librarian Dashboard</a>
-            <a href="{% url 'bookshelf:member_dashboard' %}">Member Dashboard</a>
-            <a href="{% url 'bookshelf:book_list' %}">Go to Books List</a>
-            <a href="{% url 'bookshelf:logout' %}">Logout</a>
+            <a href="{% url 'bookshelf:book_list' %}">Cancel</a>
         </div>
     </div>
 </body>

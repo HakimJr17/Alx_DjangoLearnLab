@@ -10,22 +10,27 @@
         h1 { color: #dc3545; margin-bottom: 20px; }
         p { font-size: 1.1em; line-height: 1.6; }
         .danger-message { color: #dc3545; font-weight: bold; margin-bottom: 15px; }
-        .action-links a { display: inline-block; margin: 10px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none; transition: background-color 0.3s ease; }
+        .action-links a, button { display: inline-block; margin: 10px; padding: 10px 15px; border-radius: 5px; text-decoration: none; transition: background-color 0.3s ease; }
+        .action-links a { background-color: #007bff; color: white; }
         .action-links a:hover { background-color: #0056b3; }
-        .error-message { color: #dc3545; font-weight: bold; }
+        .delete-btn { background-color: #dc3545; color: white; border: none; cursor: pointer; }
+        .delete-btn:hover { background-color: #c82333; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Delete Book</h1>
         <p class="danger-message">{{ message }}</p>
-        <p>This page is where a user with `can_delete_book` permission would confirm deletion of a book.</p>
+        <p>Are you sure you want to delete the book: **{{ book.title }}**?</p>
+        
+        <!-- A form to submit the deletion request -->
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Confirm Deletion</button>
+        </form>
+
         <div class="action-links">
-            <a href="{% url 'bookshelf:admin_dashboard' %}">Admin Dashboard</a>
-            <a href="{% url 'bookshelf:librarian_dashboard' %}">Librarian Dashboard</a>
-            <a href="{% url 'bookshelf:member_dashboard' %}">Member Dashboard</a>
-            <a href="{% url 'bookshelf:book_list' %}">Go to Books List</a>
-            <a href="{% url 'bookshelf:logout' %}">Logout</a>
+            <a href="{% url 'bookshelf:book_list' %}">Cancel</a>
         </div>
     </div>
 </body>

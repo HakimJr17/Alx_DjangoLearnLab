@@ -16,8 +16,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Redirect URLs after login/logout
-LOGIN_REDIRECT_URL = '/bookshelf/dashboard_redirect/'  # Redirect to the home page after successful login (you can change this later)
-LOGOUT_REDIRECT_URL = '/bookshelf/accounts/login/' # Redirect back to the login page after logout
+LOGIN_REDIRECT_URL = '/bookshelf/dashboard_redirect/'
+LOGOUT_REDIRECT_URL = '/bookshelf/accounts/login/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -26,9 +26,9 @@ LOGOUT_REDIRECT_URL = '/bookshelf/accounts/login/' # Redirect back to the login 
 SECRET_KEY = 'django-insecure-5#7n_378f7^^6#0j*z2cr@(b=^voycw^=tt_v2-b)pm4k$+0g)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf.apps.BookshelfConfig',
+    'csp',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware', # Content Security Policy middleware
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -126,3 +128,24 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
+
+# --- NEW: Security Settings ---
+# https://docs.djangoproject.com/en/5.2/topics/security/
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enforce secure cookies (CSRF and Session)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# To prevent Clickjacking attacks
+X_FRAME_OPTIONS = 'DENY'
+
+
+#--- NEW: CSP Settings ---
+# https://django-csp.readthedocs.io/en/latest/
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)
+CSP_IMG_SRC = ("'self'", "data:",)
+CSP_FONT_SRC = ("'self'", "data:",)
