@@ -23,15 +23,15 @@
 
         <h2>Quick Actions:</h2>
         <ul>
-            <li><a href="{% url 'relationship_app:book_list' %}">Browse All Books</a></li>
+            <li><a href="{% url 'bookshelf:book_list' %}">Browse All Books</a></li>
             <li><a href="#">View My Loans</a> (Future functionality)</li>
             <li><a href="#">Request a Book</a> (Future functionality)</li>
         </ul>
 
         <p>
-            <a href="{% url 'relationship_app:book_list' %}">Go back to Book List</a>
+            <a href="{% url 'bookshelf:book_list' %}">Go back to Book List</a>
         </p>
-        <a href="{% url 'relationship_app:logout' %}" class="logout-btn">Logout</a>
+        <a href="{% url 'bookshelf:logout' %}" class="logout-btn">Logout</a>
     </div>
 </body>
 </html>

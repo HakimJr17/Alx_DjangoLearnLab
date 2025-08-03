@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Book</title>
+    <title>Book Details</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
         .container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 600px; margin: auto; text-align: center; }
-        h1 { color: #dc3545; margin-bottom: 20px; }
+        h1 { color: #007bff; margin-bottom: 20px; }
+        h2 { color: #333; margin-top: 20px; }
         p { font-size: 1.1em; line-height: 1.6; }
-        .danger-message { color: #dc3545; font-weight: bold; margin-bottom: 15px; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 5px; }
         .action-links a { display: inline-block; margin: 10px; padding: 10px 15px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none; transition: background-color 0.3s ease; }
         .action-links a:hover { background-color: #0056b3; }
-        .error-message { color: #dc3545; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Delete Book</h1>
-        <p class="danger-message">{{ message }}</p>
-        <p>This page is where a user with `can_delete_book` permission would confirm deletion of a book.</p>
+        <h1>Book Details</h1>
+        <h2>{{ book.title }}</h2>
+        <p><strong>Author:</strong> {{ book.author.name }}</p>
+        <p><strong>In Libraries:</strong></p>
+        {% if book.libraries.all %}
+            <ul>
+                {% for library in book.libraries.all %}
+                    <li><a href="{% url 'bookshelf:library_detail' library.pk %}">{{ library.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>This book is not assigned to any library yet.</p>
+        {% endif %}
         <div class="action-links">
-            <a href="{% url 'bookshelf:admin_dashboard' %}">Admin Dashboard</a>
-            <a href="{% url 'bookshelf:librarian_dashboard' %}">Librarian Dashboard</a>
-            <a href="{% url 'bookshelf:member_dashboard' %}">Member Dashboard</a>
             <a href="{% url 'bookshelf:book_list' %}">Go to Books List</a>
             <a href="{% url 'bookshelf:logout' %}">Logout</a>
         </div>

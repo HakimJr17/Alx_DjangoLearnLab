@@ -16,4 +16,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # --- NEW: This handles the root URL ('/') ---
     path('', redirect_to_book_list, name='home'),
+     path('bookshelf/', include('bookshelf.urls')),
 ]

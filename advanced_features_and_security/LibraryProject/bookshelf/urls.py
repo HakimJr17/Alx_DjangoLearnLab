@@ -13,8 +13,9 @@ from bookshelf.views import (
     admin_view,
     librarian_view,
     member_view,
-    add_book_view,    
-    change_book_view,   
+    view_book_view,
+    edit_book_view,    
+    create_book_view,   
     delete_book_view  
 )
 
@@ -53,7 +54,7 @@ urlpatterns = [
     path('admin-dashboard/', views.admin_view, name='admin_dashboard'),
     path('librarian-dashboard/', views.librarian_view, name='librarian_dashboard'),
     path('member-dashboard/', views.member_view, name='member_dashboard'),
-    path('add_book/', add_book_view, name='add_book'),
-    path('edit_book/<int:book_id>/', change_book_view, name='edit_book'),
+    path('add_book/', create_book_view, name='edit_book'),
+    path('edit_book/<int:book_id>/', edit_book_view, name='edit_book'),
     path('delete_book/<int:book_id>/', delete_book_view, name='delete_book'),
 ]

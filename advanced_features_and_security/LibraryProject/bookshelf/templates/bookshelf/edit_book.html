@@ -21,11 +21,11 @@
         <p class="warning-message">{{ message }}</p>
         <p>This page is where a user with `can_edit_book` permission would modify existing book details.</p>
         <div class="action-links">
-            <a href="{% url 'relationship_app:admin_dashboard' %}">Admin Dashboard</a>
-            <a href="{% url 'relationship_app:librarian_dashboard' %}">Librarian Dashboard</a>
-            <a href="{% url 'relationship_app:member_dashboard' %}">Member Dashboard</a>
-            <a href="{% url 'relationship_app:book_list' %}">Go to Books List</a>
-            <a href="{% url 'relationship_app:logout' %}">Logout</a>
+            <a href="{% url 'bookshelf:admin_dashboard' %}">Admin Dashboard</a>
+            <a href="{% url 'bookshelf:librarian_dashboard' %}">Librarian Dashboard</a>
+            <a href="{% url 'bookshelf:member_dashboard' %}">Member Dashboard</a>
+            <a href="{% url 'bookshelf:book_list' %}">Go to Books List</a>
+            <a href="{% url 'bookshelf:logout' %}">Logout</a>
         </div>
     </div>
 </body>

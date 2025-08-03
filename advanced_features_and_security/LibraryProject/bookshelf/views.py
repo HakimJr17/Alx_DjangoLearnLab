@@ -83,14 +83,19 @@ def dashboard_redirect(request):
 
 
 @login_required
-@permission_required('bookshelf.can_add_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
-def add_book_view(request):
-    return render(request, 'bookshelf/add_book.html', {'message': 'You have permission to add books.'})
+@permission_required('bookshelf.can_view_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
+def view_book_view(request):
+    return render(request, 'bookshelf/view_book.html', {'message': 'You have permission to view books.'})
+
+@login_required
+@permission_required('bookshelf.can_create_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
+def create_book_view(request):
+    return render(request, 'bookshelf/create_book.html', {'message': 'You have permission to create books.'})
 
 
 @login_required
-@permission_required('bookshelf.can_change_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
-def change_book_view(request, book_id):
+@permission_required('bookshelf.can_edit_book', login_url='/bookshelf/accounts/login/', raise_exception=True)
+def edit_book_view(request, book_id):
     return render(request, 'bookshelf/edit_book.html', {'message': f'You have permission to edit book ID: {book_id}.'})
 
 @login_required

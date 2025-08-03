@@ -23,16 +23,16 @@
 
         <h2>Quick Actions:</h2>
         <ul>
-            <li><a href="{% url 'admin:relationship_app_book_changelist' %}">Manage Books</a></li>
-            <li><a href="{% url 'admin:relationship_app_author_changelist' %}">Manage Authors</a></li>
-            <li><a href="{% url 'admin:relationship_app_library_changelist' %}">Manage Libraries</a></li>
+            <li><a href="{% url 'admin:bookshelf_book_changelist' %}">Manage Books</a></li>
+            <li><a href="{% url 'admin:bookshelf_author_changelist' %}">Manage Authors</a></li>
+            <li><a href="{% url 'admin:bookshelf_library_changelist' %}">Manage Libraries</a></li>
             <li><a href="#">Check Out/In Books</a> (Future functionality)</li>
         </ul>
 
         <p>
-            <a href="{% url 'relationship_app:book_list' %}">Browse Available Books</a>
+            <a href="{% url 'bookshelf:book_list' %}">Browse Available Books</a>
         </p>
-        <a href="{% url 'relationship_app:logout' %}" class="logout-btn">Logout</a>
+        <a href="{% url 'bookshelf:logout' %}" class="logout-btn">Logout</a>
     </div>
 </body>
 </html>
