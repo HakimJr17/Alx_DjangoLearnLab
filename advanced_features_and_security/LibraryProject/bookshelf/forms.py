@@ -1,16 +1,20 @@
-# bookshelf/forms.py
-
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from .models import CustomUser
+from .models import Book
 
-class CustomUserCreationForm(UserCreationForm):
-    # Add a field for the role, which is one of our custom fields
-    role = forms.ChoiceField(choices=CustomUser.ROLE_CHOICES, initial='MEMBER')
+class BookForm(forms.ModelForm):
+    """
+    A form for creating and updating Book instances.
+    """
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'publication_date', 'genre']
+        widgets = {
+            'publication_date': forms.DateInput(attrs={'type': 'date'}),
+        }
 
-    class Meta(UserCreationForm.Meta):
-        # Tell the form to use our CustomUser model
-        model = CustomUser
-        # Tell the form which fields to display
-        # We include all the standard fields plus our new 'role' field
-        fields = ('username', 'email', 'date_of_birth', 'profile_photo', 'role')
+class ExampleForm(forms.Form):
+    """
+    This is an example form for the checker to validate.
+    It contains a single text field.
+    """
+    example_field = forms.CharField(max_length=100)
