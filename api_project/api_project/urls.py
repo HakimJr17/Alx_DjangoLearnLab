@@ -13,13 +13,28 @@ Class-based views
 Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+
 """
 
 from django.contrib import admin
 from django.urls import path, include
 from api.urls import router
+from rest_framework.authtoken import authtoken_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api-token-auth/', authtoken_views.obtain_auth_token),
+    # This line creates a new API endpoint at http://127.0.0.1:8000/api-token-auth/
 ]
+
+'''
+DRF's Built-in Views: Django REST Framework provides several generic, "plug-and-play" views that 
+handle common tasks. obtain_auth_token is one of them. Its sole purpose is to receive a username 
+and password in a POST request, validate them against the database, and return a unique token.
+
+Minimal Configuration: By using this view, you avoid the need to write the logic for authentication
+, validation, and token creation yourself. 
+All you have to do is import it and include it in the urls.py file.
+ DRF helps you build APIs faster by providing ready-to-use components.
+'''
