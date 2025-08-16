@@ -10,6 +10,7 @@ router.register(r'authors_all', AuthorViewSet, basename = 'authors_all')
 
 urlpatterns = router.urls
 
+
 '''urlpatterns = [
     # Route for the BookList view (ListAPIView)
     path('books/', BookList.as_view(), name='book-list'),
