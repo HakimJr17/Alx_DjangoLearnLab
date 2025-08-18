@@ -19,7 +19,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from api.urls import router
-from rest_framework.authtoken import authtoken_views
+from rest_framework.authtoken import views as authtoken_views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,4 +37,16 @@ Minimal Configuration: By using this view, you avoid the need to write the logic
 , validation, and token creation yourself. 
 All you have to do is import it and include it in the urls.py file.
  DRF helps you build APIs faster by providing ready-to-use components.
+
+The obtain_auth_token view only accepts POST requests. 
+You can't just visit the URL in your browser and expect it to work.
+
+To get a token, an application (or a tool like curl or Postman) must send a POST request to 
+this new URL with the user's username and password in the request body.
+
+If the username and password are correct, the API will respond with a 
+JSON object containing the token.
+
+This is the token that a client (like a mobile app or a front-end website) will then use in all 
+subsequent requests to your protected API endpoints 
 '''

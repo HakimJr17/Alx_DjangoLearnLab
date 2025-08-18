@@ -125,3 +125,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # This tells the DRF that for all of the API views, the default way to check a 
 # user's identity is by looking for an authentication token.
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+# The rest_framework above does the following --> 
+# It tell DRF to use TokenAuthentication by default for all your API views. 
