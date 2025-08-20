@@ -1,19 +1,19 @@
-Authentication and Permissions Documentation
-1. What is Authentication?
+###### Authentication and Permissions Documentation
+#### 1. What is Authentication?
 Authentication is the process of verifying a user's identity. In a web API, this means confirming that a request is coming from a known user.
 
-In your project, we've implemented Token Authentication. This is a modern, stateless method where a user exchanges their username and password for a unique, random string called a token.  This token then acts as their digital key. For every subsequent request to a protected part of the API, the user includes this token in the request headers instead of their username and password. The API simply checks if the token is valid, which is a very secure and efficient way to handle authentication.
+In this project, i've implemented Token Authentication. This is a modern, stateless method where a user exchanges their username and password for a unique, random string called a token.  This token then acts as their digital key. For every subsequent request to a protected part of the API, the user includes this token in the request headers instead of their username and password. The API simply checks if the token is valid, which is a very secure and efficient way to handle authentication.
 
 The endpoint for obtaining a token is located at:
 http://127.0.0.1:8000/api-token-auth/
 
-2. What are Permissions?
+#### 2. What are Permissions?
 Permissions control what an authenticated user is allowed to do. While authentication confirms who a user is, permissions determine what they can access or modify.
 
-In your project, you've used both built-in DRF permissions and a custom one to define these rules. The permission classes are applied to your ViewSet classes.
+In this project, i've used both built-in DRF permissions and a custom one to define these rules. The permission classes are applied to the ViewSet classes.
 
-3. Permissions in Your API
-We've configured your API with the following rules:
+#### 3. Permissions in the API
+I've configured the API with the following rules:
 
 BookViewSet:
 
@@ -36,7 +36,7 @@ A client (like a mobile app) sends a POST request with a username and password t
 
 If the credentials are correct, the API returns a unique token to the client.
 
-For subsequent requests to a protected endpoint (e.g., /api/books/), the client sends a GET request and includes the token in the Authorization header.
+For subsequent requests to a protected endpoint (e.g., /api/books_all/), the client sends a GET request and includes the token in the Authorization header.
 
 Django REST Framework's TokenAuthentication checks if the token is valid.
 
