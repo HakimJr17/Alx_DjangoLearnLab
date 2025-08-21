@@ -26,7 +26,7 @@ LOGOUT_REDIRECT_URL = '/bookshelf/accounts/login/'
 SECRET_KEY = 'django-insecure-5#7n_378f7^^6#0j*z2cr@(b=^voycw^=tt_v2-b)pm4k$+0g)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -137,17 +137,20 @@ SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
 # NEW: HTTPS and HSTS settings
-SECURE_SSL_REDIRECT = True
-SECURE_HSTS_SECONDS = 31536000 # One year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+#SECURE_SSL_REDIRECT = False
+#SECURE_HSTS_SECONDS = 31536000 # One year
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
 
 # NEW: Proxy settings for HTTPS
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# --- CSP Settings ---
-CSP_DEFAULT_SRC = ("'self'",)
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)
-CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",)
-CSP_IMG_SRC = ("'self'", "data:",)
-CSP_FONT_SRC = ("'self'", "data:",)
+# --- UPDATED: CSP Settings for django-csp v4.0+ ---
+# https://django-csp.readthedocs.io/en/latest/migration-guide.html
+CSP_MIDDLEWARE = {
+    'DEFAULT_SRC': ("'self'",),
+    'SCRIPT_SRC': ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",),
+    'STYLE_SRC': ("'self'", "'unsafe-inline'", "cdn.tailwindcss.com",),
+    'IMG_SRC': ("'self'", "data:",),
+    'FONT_SRC': ("'self'", "data:",),
+}

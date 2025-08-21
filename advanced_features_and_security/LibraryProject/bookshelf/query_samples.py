@@ -1,4 +1,4 @@
-# relationship_app/query_samples.py
+# bookshelf/query_samples.py
 
 import os
 import sys
@@ -13,7 +13,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'LibraryProject.settings')
 django.setup()
 
 # Now you can import your models
-from relationship_app.models import Author, Book, Library, Librarian
+from bookshelf.models import Author, Book, Library, Librarian
 
 def setup_sample_data():
     """Sets up sample data for testing queries."""

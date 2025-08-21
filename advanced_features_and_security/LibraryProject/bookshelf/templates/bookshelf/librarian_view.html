@@ -19,14 +19,12 @@
 <body>
     <div class="container">
         <h1>Welcome, {{ user.username|capfirst }} ({{ role }} Dashboard)!</h1>
-        <p>As a **Librarian**, you can manage books, authors, and libraries.</p>
+        <p>As a **Librarian**, you can manage books and add books.</p>
 
         <h2>Quick Actions:</h2>
         <ul>
-            <li><a href="{% url 'admin:bookshelf_book_changelist' %}">Manage Books</a></li>
-            <li><a href="{% url 'admin:bookshelf_author_changelist' %}">Manage Authors</a></li>
-            <li><a href="{% url 'admin:bookshelf_library_changelist' %}">Manage Libraries</a></li>
-            <li><a href="#">Check Out/In Books</a> (Future functionality)</li>
+            <li><a href="{% url 'bookshelf:book_list' %}">Manage Books</a></li>
+            <li><a href="{% url 'bookshelf:create_book' %}">Add New Book</a></li>
         </ul>
 
         <p>
